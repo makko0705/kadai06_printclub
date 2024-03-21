@@ -1,0 +1,93 @@
+<!DOCTYPE html>
+<html lang="ja">
+
+<head>
+    <meta charset="utf-8">
+    <title>画像アップロード</title>
+    <link rel="stylesheet" href="./css/style.css">
+    <link rel="icon" type="image/png" href="img/favicon.png">
+</head>
+
+<body>
+    <div class="outer">
+        <marquee>♡ﾁｬﾝﾏｷの部屋へようこそ♡</marquee>
+        <p class="">†*:;;;:*†*:;;;:*†*:;;;:*†*:;;;:*†**†*:;;;:*†*:;;;:*†*:;;;:*†*:;;;:**†</p>
+        <p>キリ番踏んだら報告してね✨</p>
+        <p class="blinking">あなたは<img src="img/c01.gif">人目のお姫様♡</p>
+        <div class="eyecatch">
+            <p><img src="img/eyecatch.png" alt=""></p>
+        </div>
+
+
+        <table>
+            <tr>
+                <th>HN</th>
+            </tr>
+            <tr>
+                <td>ﾁｬﾝﾏｷ♡</td>
+            </tr>
+            <tr>
+                <th>持ってる資格</th>
+            </tr>
+            <tr>
+                <td>普通自動車免許<br>英検準2級<br>恋人検定1級</td>
+            </tr>
+            <tr>
+                <th>体重</th>
+            </tr>
+            <tr>
+                <td>りんご30個くらい</td>
+            </tr>
+            <tr>
+                <th>前世</th>
+            </tr>
+            <tr>
+                <td>Angel👼</td>
+            </tr>
+            <tr>
+                <th>落書きしてく？</th>
+            </tr>
+            <tr>
+                <td>
+                    <div class="brash input_area">
+                        <div class="brash_menu">
+                            <span>ペンの色</span>
+                            <input type="color" id="brash_color"><p id="inputColorResult"></p>       
+                        </div>
+                        <div class="brash_menu">
+                            <span>太さ</span>
+                            <input type="range" id="brash_width" name="brash_width" min="3" max="150">
+                            <p id="inputWidthResult"></p> 
+                        </div>
+                        <div class="upload">
+                            <span>写真を選ぶ</span>
+                            <form action="test.html" method="post" enctype="multipart/form-data" >
+                                <input type="file" name="test" onchange="previewFile(this);" id="file">
+                                
+                        </div>
+                    </div>
+                </td>
+            </tr>
+        </table>
+
+
+        <div class="wrap printclub">
+            <img src="" id="demo_image" width="500" height="500" alt="画像を選んでください">
+            <div id="bg_area"></div>
+            <canvas id="drow_area" width="500" height="500" data-value="書きました"></canvas>   
+            <canvas id="concat" width="500" height="500" data-value="合成しました"></canvas> 
+          </div>
+        <p>右クリックで画像を保存してね</p>
+        <div class="btn_area">
+            <p id="clear_btn" class="btn">最初から</p>
+            <p id="btn_concat" class="btn">完成</p>
+        </div>
+    </div>
+
+
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/2.2.4/jquery.min.js"></script>
+<script type="text/javascript" src="./js/main.js">
+</script>
+</body>
+
+</html>

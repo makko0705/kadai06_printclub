@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <meta charset="utf-8">
+    <title>canvas_base.html</title>
+    <link rel="icon" type="image/png" href="img/favicon.png">
+
+</head>
+
+<body>
+    <section>
+        <h1>Canvas</h1>
+        <nav>
+            
+            <!-- 線の色を変更するHTML要素 -->
+
+            <!-- 線の太さを変更するHTML要素 -->
+            
+            <button id="clear_btn">クリアー</button>
+        </nav>
+        <canvas id="drowarea" width="500" height="500" style="border:1px solid blue;"></canvas>
+    </section>
+
+    <form>
+        <input type="file" accept="image/*" multiple=" multiple" onchange="loadImage(this);" value="画像を選択またはドラック&ドロップ">
+    </form>
+    <div id="imgPreviewField">
+    </div>
+
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.7.0/jquery.min.js"></script>
+<script type="text/javascript" src="./js/main02.js"></script>
+
+</body>
+
+</html>

@@ -1,0 +1,162 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="./css/style02.css">
+    <title>Document</title>
+</head>
+
+<body>
+    <div class="wrap">
+      <img src="img/85744918.jpeg" id="demo_image" width="500" height="500">
+      <div id="bg_area"></div>
+      <canvas id="drow_area" width="500" height="500" data-value="書きました"></canvas>   
+      <p id="btn-concat">合成する</p>
+      <canvas id="concat" width="500" height="500" data-value="合成しました"></canvas> 
+    </div>
+
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/2.2.4/jquery.min.js"></script>
+<script>
+//*******************ここからcanvas*******************//
+//初期化(変数letで宣言)
+let canvas_mouse_event = false; //スイッチ [ true=線を引く, false=線は引かない ]  ＊＊＊
+let oldX = 0; //１つ前の座標を代入するための変数
+let oldY = 0; //１つ前の座標を代入するための変数
+let bold_line = 30; //ラインの太さをここで指定
+let color = "#ffffcc"; //ラインの色をここで指定
+
+//------------------------------------------------
+const canvas_drow = $("#drow_area")[0];//CanvasElement
+const ctx_drow = canvas_drow.getContext("2d");//描画するための準備！
+const width = 500;
+const height = 500;
+
+//mousedown：フラグをTrue
+//-----------------------------------------------
+$(canvas_drow).on("mousedown",function(e){
+  console.log(e,"書いてるときに出る");
+  oldX = e.offsetX;//MOUSEDOWNしたX横座標取得
+  oldY = e.offsetY;//MOUSEDOWN Y高さ座標取得
+  canvas_mouse_event = true;
+});
+
+//mousemove：フラグがTrueだったら描く ※e：イベント引数取得
+//----------------------------------------------
+$(canvas_drow).on("mousemove",function(e){
+  const px = e.offsetX;
+  const py = e.offsetY;
+  if (px > width || py > height) {
+      alert("でましたよ！");
+  }
+  if(canvas_mouse_event == true) {
+    ctx_drow.strokeStyle = color;//色
+    ctx_drow.lineWidth = bold_line;//太さ
+    ctx_drow.beginPath();
+    ctx_drow.moveTo(oldX,oldY);
+    ctx_drow.lineTo(px, py);
+    ctx_drow.lineJoin = "round";
+    ctx_drow.lineCap = "round";
+    ctx_drow.stroke();
+      oldX = px;
+      oldY = py;
+  }
+});
+
+//mouseup：フラグをfalse
+//------------------------------------------------
+$(canvas_drow).on("mouseup",function(){
+  canvas_mouse_event = false;
+
+});
+
+//#clear_btn：クリアーボタンAction
+//-----------------------------------------------------------------
+$("#clear_btn").on("click",function(){
+  ctx_drow.beginPath();
+  ctx_drow.clearRect(0,0,canvas_drow.width,canvas_drow.height);
+});
+
+//ここで画像をキャンバスにいれる
+ //画像を分析するので読み込んでから発火
+    //$(function(){ にはしない
+$(window).load(function(){
+  var $img = $('#demo_image');
+  var imgW = $img.width();
+  var imgH = $img.height();
+
+  //取得した画像サイズのcanvasを追加
+  $("#bg_area").append('<canvas id="myPhoto" width="'+imgW+'" height="'+imgH+'"></canvas>');
+
+  //キャンパスに描画するためのコンテキストを用意する
+  var canvas_myPhoto = document.getElementById('myPhoto'),
+      ctx_bg = canvas_myPhoto.getContext('2d');
+
+  //取得した画像を新しいオブジェクトとして生成する
+  var image = new Image();
+  console.log(image,"imageのなかみ");
+
+  image.src = $img.attr("src");
+  console.log(image.src,"image.srcのなかみ");
+
+  // 描画する
+  // drawImage(image.src,開始X,開始Y,終点X,終点Y,リサイズ開始X,リサイズ開始Y,リサイズ終点X,リサイズ終点Y)
+  ctx_bg.drawImage(image, 0, 0, image.width, image.height, 0, 0, imgW, imgH);
+  // 元画像のサイズのまま描画する場合、ctx.drawImage(image, 0, 0)でよい
+
+console.log(ctx_bg,"背景のコンソールです");
+  return;
+});
+
+
+//const canvas_drow = document.getElementById("drow_area"); これは上で定義してある
+const canvas_bg = document.getElementById("myPhoto");
+
+console.log(ctx_drow);
+
+document.querySelector("#btn-concat").addEventListener("click", ()=>{
+    concatCanvas("#concat", ["#myPhoto", "#drow_area"]);
+  });
+
+
+// Canvas合成
+  async function concatCanvas(base, asset){
+  const canvas = document.querySelector(base);
+  const ctx = canvas.getContext("2d");
+
+  for(let i=0; i<asset.length; i++){
+    const image1 = await getImagefromCanvas(asset[i]);
+    ctx.drawImage(image1, 0, 0, canvas.width, canvas.height);
+  }
+
+  //ボタンを押したらダウンロードが走る機能
+  const a = document.createElement("a");
+  a.href = ctx.canvas.toDataURL("image/jpeg", 0.75); // PNGなら"image/png"
+  a.download = "image.jpg";
+  a.click();
+  //ここまで
+
+}
+// Canvasをすべて削除する
+function eraseCanvas(target){
+  const canvas = document.querySelector(target);
+  const ctx = canvas.getContext("2d");
+  ctx.clearRect(0, 0, canvas.width, canvas.height);
+}
+//Canvasを画像として取得
+function getImagefromCanvas(id){
+  return new Promise((resolve, reject) => {
+    const image = new Image();
+    const ctx = document.querySelector(id).getContext("2d");
+    image.onload = () => resolve(image);
+    image.onerror = (e) => reject(e);
+    image.src = ctx.canvas.toDataURL();
+
+
+
+
+  });
+}
+</script>
+</body>
+</html>

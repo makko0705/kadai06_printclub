@@ -1,0 +1,50 @@
+body {
+  padding-top: 4px;
+  border-radius: 3px;
+  text-align: center;
+  color: #fff;
+}
+
+.wrap {
+  position: relative;
+  width: 500px;
+  margin: 0 auto;
+  color: #e4007f;
+  padding: 40px 0;
+}
+
+#canvas {
+  border: 2px solid #f00;
+}
+
+img {
+  z-index: -1;
+  position: absolute;
+  top: 0;
+  right: 0;
+}
+
+#btn-concat {
+  position: absolute;
+  top: 0;
+  right: 0;
+  z-index: 1000;
+  background: #e4007f;
+  color: #fff;
+  width: 100px;
+  height: 30px;
+}
+
+#myPhoto {
+  z-index: 100;
+  border: 2px solid red;
+}
+
+#drow_area {
+  border: 2px solid blue;
+}
+
+#concat {
+  border: 2px solid green;
+  position: relative;
+}/*# sourceMappingURL=style02.css.map */
